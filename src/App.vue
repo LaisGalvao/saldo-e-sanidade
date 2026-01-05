@@ -1,5 +1,4 @@
 <script setup>
-import { watch } from 'vue'
 import { useAuth } from './composables/useAuth'
 import AuthComponent from './components/AuthComponent.vue'
 import Dashboard from './views/Dashboard.vue'

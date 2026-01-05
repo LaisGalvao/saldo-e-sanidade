@@ -59,7 +59,7 @@
             class="edit-input"
             @keyup.enter="saveEdit(obligation.id)"
             @blur="saveEdit(obligation.id)"
-            ref="editInput"
+            autofocus
           />
           
           <button @click="handleDelete(obligation.id)" class="btn-delete">✕</button>
@@ -74,7 +74,7 @@
 </template>
 
 <script setup>
-import { ref, nextTick } from 'vue'
+import { ref } from 'vue'
 
 const props = defineProps({
   obligations: {
@@ -89,7 +89,6 @@ const newDescription = ref('')
 const newAmount = ref('')
 const editingId = ref(null)
 const editAmount = ref(0)
-const editInput = ref(null)
 
 const handleAdd = () => {
   if (newDescription.value && newAmount.value) {
@@ -107,13 +106,9 @@ const handleStatusChange = (id, status) => {
   emit('updateStatus', id, status)
 }
 
-const startEdit = async (obligation) => {
+const startEdit = (obligation) => {
   editingId.value = obligation.id
   editAmount.value = obligation.adjusted_amount || obligation.amount
-  await nextTick()
-  if (editInput.value) {
-    editInput.value.focus()
-  }
 }
 
 const saveEdit = (id) => {

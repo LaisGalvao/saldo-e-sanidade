@@ -15,7 +15,7 @@ export function useMonthlyPlan(userId, selectedMonth) {
   const totalObligations = computed(() => {
     return obligations.value
       .filter(ob => ob.status !== 'ignored')
-      .reduce((sum, ob) => sum + (ob.adjusted_amount || ob.amount || 0), 0)
+      .reduce((sum, ob) => sum + (ob.adjusted_amount ?? ob.amount ?? 0), 0)
   })
 
   const surplus = computed(() => {
