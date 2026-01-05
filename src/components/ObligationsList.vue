@@ -112,7 +112,7 @@ const startEdit = async (obligation) => {
   editAmount.value = obligation.adjusted_amount || obligation.amount
   await nextTick()
   if (editInput.value) {
-    editInput.value[0]?.focus()
+    editInput.value.focus()
   }
 }
 
