@@ -1,9 +1,10 @@
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { supabase } from './useSupabase'
 
 export function useAuth() {
   const user = ref(null)
   const loading = ref(true)
+  let authListener = null
 
   const checkUser = async () => {
     const { data: { session } } = await supabase.auth.getSession()
@@ -38,9 +39,17 @@ export function useAuth() {
   onMounted(() => {
     checkUser()
 
-    supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       user.value = session?.user ?? null
     })
+    
+    authListener = subscription
+  })
+
+  onUnmounted(() => {
+    if (authListener) {
+      authListener.unsubscribe()
+    }
   })
 
   return {

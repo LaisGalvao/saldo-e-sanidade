@@ -31,14 +31,16 @@ watch(() => props.modelValue, (newValue) => {
 
 const previousMonth = () => {
   const [year, month] = localMonth.value.split('-').map(Number)
-  const date = new Date(year, month - 2)
+  const date = new Date(year, month - 1, 1)
+  date.setMonth(date.getMonth() - 1)
   localMonth.value = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
   emit('update:modelValue', localMonth.value)
 }
 
 const nextMonth = () => {
   const [year, month] = localMonth.value.split('-').map(Number)
-  const date = new Date(year, month)
+  const date = new Date(year, month - 1, 1)
+  date.setMonth(date.getMonth() + 1)
   localMonth.value = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
   emit('update:modelValue', localMonth.value)
 }

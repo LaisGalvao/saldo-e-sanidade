@@ -113,8 +113,11 @@ const startEdit = (obligation) => {
 
 const saveEdit = (id) => {
   if (editingId.value === id) {
-    emit('updateStatus', id, null, parseFloat(editAmount.value))
-    editingId.value = null
+    const newAmount = parseFloat(editAmount.value)
+    if (!isNaN(newAmount) && newAmount >= 0) {
+      emit('updateStatus', id, null, newAmount)
+      editingId.value = null
+    }
   }
 }
 
