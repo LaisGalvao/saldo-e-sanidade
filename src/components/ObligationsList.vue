@@ -56,6 +56,7 @@
             v-model.number="editAmount"
             type="number"
             step="0.01"
+            min="0"
             class="edit-input"
             @keyup.enter="saveEdit(obligation.id)"
             @blur="saveEdit(obligation.id)"
@@ -116,8 +117,9 @@ const saveEdit = (id) => {
     const newAmount = parseFloat(editAmount.value)
     if (!isNaN(newAmount) && newAmount >= 0) {
       emit('updateStatus', id, null, newAmount)
-      editingId.value = null
     }
+    // Always close edit mode, even if value is invalid
+    editingId.value = null
   }
 }
 
